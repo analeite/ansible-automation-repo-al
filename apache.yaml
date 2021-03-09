@@ -11,7 +11,7 @@
 
     - name: Download do Apache
       win_get_url:
-        url: https://archive.apache.org/dist/httpd/binaries/win32/httpd-2.2.25-win32-x86-no_ssl.msi
+        url: http://vmwl6246.mars-ad.net:8080/
         dest: C:\ansible_examples\httpd-2.2.25-win32-x86-no_ssl.msi
 
     - name: Instalação do Apache
