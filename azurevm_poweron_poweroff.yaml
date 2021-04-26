@@ -1,0 +1,23 @@
+---
+- name: Azure VM power off and power on
+  hosts: localhost
+  gather_facts: False
+  vars: 
+    vm_name: 
+    resource_group:
+    action_to_take:
+
+  tasks:
+    - name: Power Off
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group }}"
+        name: "{{ vm_name }}"
+        started: no
+      when: action_to_take == 'poweroff'
+
+    - name: Power On
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group }}"
+        name: "{{ vm_name }}"
+        started: yes
+      when: action_to_take == 'poweron'
