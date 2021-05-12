@@ -5,8 +5,7 @@
   vars:
     vm_name:
     resource_group:
-    action_to_take:
-
+    action_to_take:'
   tasks:
     - name: Power Off
       azure_rm_virtualmachine:
