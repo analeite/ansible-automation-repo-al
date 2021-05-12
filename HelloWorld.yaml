@@ -1,7 +1,7 @@
 ---
 - name: Retrieve Hostname
   hosts: "{{ target_host }}"
-  gather_facts: False
+  gather_facts: false
   tasks:
   - name: Hostname command
     win_shell: hostname

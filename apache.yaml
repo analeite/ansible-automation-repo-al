@@ -3,9 +3,9 @@
   hosts: "{{ target_host }}"
 
   tasks:
-    #Task 1
+    # Task 1
     - name: Create Ansible dir
-      win_file: 
+      win_file:
         path: C:\ansible_examples
         state: directory
 
