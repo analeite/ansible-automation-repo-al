@@ -1,0 +1,12 @@
+---
+image:
+  name: ansible-lint:mars-custom
+  entrypoint: [""]
+
+stages:
+  - syntax
+
+lint ansible playbooks:
+  stage: syntax
+  script:
+    - ansible-lint -p .
