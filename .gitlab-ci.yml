@@ -4,9 +4,11 @@ image:
   entrypoint: [""]
 
 stages:
-  - syntax
+  - test
+  - review
+  - deploy
 
 lint ansible playbooks:
-  stage: syntax
+  stage: test
   script:
     - ansible-lint -p .
