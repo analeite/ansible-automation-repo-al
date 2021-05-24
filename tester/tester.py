@@ -1,6 +1,8 @@
 import os
 import requests
 import urllib3
+import time
+import sys
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -30,9 +32,27 @@ def get_automation_status(job_id):
 # Orchestrate this module execution
 def main():
   for automation in AUTOMATION_LIST:
-    launch_automation(automation['id'])
+    job_id = launch_automation(automation['id'])
+    run_time = 0
+    increment_time = 5
+    while run_time <= automation['timeout']:
+      automation['execution_status'] = 'timeout'
+      time.sleep(5)
+      automation['execution_status'] = get_automation_status(job_id)
+      if automation['execution_status'] == 'successful':
+        break
+      if automation['execution_status'] == 'failed':
+        break
+      
+      run_time += increment_time
 
+  print(AUTOMATION_LIST)
+  if len([automation for automation in AUTOMATION_LIST if automation['execution_status'] != "successful"]) > 0:
+    sys.exit(1)
+  else:
+    sys.exit(0)
+    
 
 
 if __name__ == '__main__':
-  main()
+  print(main())
