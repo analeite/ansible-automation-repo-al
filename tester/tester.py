@@ -9,8 +9,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 AUTOMATION_LIST = []
 
 # Define Critical Automation List to be tested
-with open('tester.yaml') as config_file:
-  AUTOMATION_LIST = yaml.load(config_file, Loader=yaml.CLoader)
+def load_config_file(config_file):
+  with open(config_file) as automation_list:
+    AUTOMATION_LIST = yaml.load(automation_list, Loader=yaml.CLoader)
+    return AUTOMATION_LIST
 
 # Define Ansible Credential
 ANSIBLE_HOST = os.getenv('ANSIBLE_HOST')
@@ -18,12 +20,14 @@ ANSIBLE_HEADERS = {"Authorization": f"Bearer {os.getenv('ANSIBLE_TOKEN')}"}
 
 # Execute automation using Ansible API
 def launch_automation(id):
-  try:
     r = requests.post(f"{ANSIBLE_HOST}/api/v2/job_templates/{id}/launch/", headers=ANSIBLE_HEADERS, verify = False)
-    return r.json()['job']
-  except Exception as e:
-    print(f"FAILED TO LAUNCH THE AUTOMATION WITH ID: {id}")
-    raise Exception
+    try:
+      return r.json()['job']
+    except Exception as e:
+      print(f"FAILED TO LAUNCH THE AUTOMATION WITH ID: {id}")
+      print(r.json()['detail'])
+      sys.exit(1)
+
 
 # Get status from Ansible Job Execution
 def get_automation_status(job_id):
@@ -45,6 +49,7 @@ def print_results(results):
 
 # Orchestrate this module execution
 def main():
+  AUTOMATION_LIST = load_config_file(sys.argv[1])
   for automation in AUTOMATION_LIST:
     job_id = launch_automation(automation['id'])
     run_time = 0

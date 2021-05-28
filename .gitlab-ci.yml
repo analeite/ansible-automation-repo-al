@@ -12,3 +12,11 @@ lint ansible playbooks:
   stage: test
   script:
     - ansible-lint -p .
+
+test critical automation:
+  stage: test
+  variables:
+    ANSIBLE_TOKEN: $ANSIBLE_TOKEN
+    ANSIBLE_HOST: $ANSIBLE_HOST
+  script:
+    - python tester.py 'tester/tester.yaml'
