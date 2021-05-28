@@ -11,7 +11,7 @@ AUTOMATION_LIST = []
 # Define Critical Automation List to be tested
 def load_config_file(config_file):
   with open(config_file) as automation_list:
-    AUTOMATION_LIST = yaml.load(automation_list, Loader=yaml.CLoader)
+    AUTOMATION_LIST = yaml.load(automation_list, Loader=yaml.Loader)
     return AUTOMATION_LIST
 
 # Define Ansible Credential
