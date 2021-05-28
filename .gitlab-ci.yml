@@ -20,4 +20,4 @@ test critical automation:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
   script:
-    - python tester/tester.py 'tester/tester.yaml'
+    - python /tester.py 'tester/tester.yaml'
