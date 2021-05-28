@@ -4,20 +4,20 @@ image:
   entrypoint: [""]
 
 stages:
-  - test_syntax_quality
-  - test_integration_critical
+  - test - syntax and code quality
+  - test - critical automations
   - review
   - deploy
 
 lint ansible playbooks:
-  stage: test_syntax_quality
+  stage: test - syntax and code quality
   script:
     - ansible-lint -p .
 
 test critical automation:
-  stage: test_integration_critical
+  stage: test - critical automations
   variables:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
   script:
-    - python /tester.py 'tester/tester.yaml'
+    - python /tester.py 'tester.yaml'
