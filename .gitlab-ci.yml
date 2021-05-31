@@ -28,5 +28,3 @@ deploy:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
   script:
     - 'curl -X GET -H "Authorization: Bearer $ANSIBLE_TOKEN" https://ansible.apps.mars/api/v2/projects/87/update/ -k'
-  
-
