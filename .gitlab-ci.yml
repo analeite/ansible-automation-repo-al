@@ -1,4 +1,8 @@
 ---
+image:
+  name: ansible-lint:mars-custom
+  entrypoint: [""]
+
 stages:
   - test - syntax and code quality
   - test - critical automations
@@ -7,24 +11,45 @@ stages:
 
 lint ansible playbooks:
   stage: test - syntax and code quality
-  image:
-    name: ansible-lint:mars-custom
   script:
     - ansible-lint -p .
 
 test critical automation:
   stage: test - critical automations
-  image:
-    name: ansible-lint:mars-custom
   variables:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
   script:
     - python /tester.py 'tester/tester.yaml'
 
-deploy:
+.deploy: &deploy
   stage: deploy
+  script:
+    - 'curl -X GET -H "Authorization: Bearer $ANSIBLE_TOKEN" https://$ANSIBLE_HOST/api/v2/projects/$PROJECT_ID/update/ -k'
+
+Deploy Master:
+  <<: *deploy
   variables:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
-  script:
-    - 'curl -X GET -H "Authorization: Bearer $ANSIBLE_TOKEN" https://ansible.apps.mars/api/v2/projects/87/update/ -k'
+    ANSIBLE_HOST: $ANSIBLE_HOST
+    PROJECT_ID: 87
+  only:
+    - master
+
+Deploy Pre-Production:
+  <<: *deploy
+  variables:
+    ANSIBLE_TOKEN: $ANSIBLE_TOKEN
+    ANSIBLE_HOST: $ANSIBLE_HOST
+    PROJECT_ID: --TBD--
+  only:
+    - pre_production
+
+Deploy Production:
+  <<: *deploy
+  variables:
+    ANSIBLE_TOKEN: $ANSIBLE_TOKEN
+    ANSIBLE_HOST: $ANSIBLE_HOST
+    PROJECT_ID: --TBD--
+  only:
+    - production
