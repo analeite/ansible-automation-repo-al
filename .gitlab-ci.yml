@@ -1,8 +1,4 @@
 ---
-image:
-  name: ansible-lint:mars-custom
-  entrypoint: [""]
-
 stages:
   - test - syntax and code quality
   - test - critical automations
@@ -11,11 +7,15 @@ stages:
 
 lint ansible playbooks:
   stage: test - syntax and code quality
+  image:
+    name: ansible-lint:mars-custom
   script:
     - ansible-lint -p .
 
 test critical automation:
   stage: test - critical automations
+  image:
+    name: ansible-lint:mars-custom
   variables:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
