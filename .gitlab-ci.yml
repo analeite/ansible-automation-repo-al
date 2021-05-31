@@ -25,7 +25,6 @@ stages:
 .deploy: &deploy
   stage: deploy
   script:
-    - echo $ANSIBLE_HOST
     - 'curl -X GET -H "Authorization: Bearer ${ANSIBLE_TOKEN}" ${ANSIBLE_HOST}/api/v2/projects/${PROJECT_ID}/update/ -k'
 
 Deploy Master:
