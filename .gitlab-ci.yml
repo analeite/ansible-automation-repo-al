@@ -6,7 +6,7 @@ image:
 stages:
   - test - syntax and code quality
   - test - critical automations
-  - review
+  # - review - Merge review is done by GitLab merge approval, only when the pipeline succeeds
   - deploy
 
 lint ansible playbooks:
@@ -21,3 +21,12 @@ test critical automation:
     ANSIBLE_HOST: $ANSIBLE_HOST
   script:
     - python /tester.py 'tester/tester.yaml'
+
+deploy:
+  stage: deploy
+  variables:
+    ANSIBLE_TOKEN: $ANSIBLE_TOKEN
+  script:
+    - 'curl -X GET -H "Authorization: Bearer $ANSIBLE_TOKEN" https://ansible.apps.mars/api/v2/projects/87/update/ -k'
+  
+
