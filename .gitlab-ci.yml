@@ -13,6 +13,8 @@ lint ansible playbooks:
   stage: test - syntax and code quality
   script:
     - ansible-lint -p .
+  only:
+    - merge_requests
 
 test critical automation:
   stage: test - critical automations
@@ -20,7 +22,9 @@ test critical automation:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
   script:
-    - python /tester.py 'tester/tester.yaml'
+    - python /tester.py 'tester/critical_automations.yml'
+  only:
+    - merge_requests
 
 .deploy: &deploy
   stage: deploy
@@ -32,7 +36,7 @@ Deploy Testing:
   variables:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
-    PROJECT_ID: 87
+    PROJECT_ID: 134
   only:
     - testing
 
@@ -41,7 +45,7 @@ Deploy Pre-Production:
   variables:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
-    PROJECT_ID: --TBD--
+    PROJECT_ID: 135
   only:
     - pre_production
 
@@ -50,6 +54,6 @@ Deploy Production:
   variables:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
-    PROJECT_ID: --TBD--
+    PROJECT_ID: 87
   only:
     - production
