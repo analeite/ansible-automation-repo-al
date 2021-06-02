@@ -24,7 +24,13 @@ test critical automation:
   script:
     - python /tester.py 'tester/critical_automations.yml'
   only:
-    - merge_requests
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "production"
+      - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "pre_production"
+
+
 
 .deploy: &deploy
   stage: deploy
