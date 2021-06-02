@@ -14,6 +14,13 @@ lint ansible playbooks:
   script:
     - ansible-lint -p .
 
+lint for ansible playbooks - merge:
+  stage: test - syntax and code quality
+  script:
+    - ansible-lint -p .
+  only:
+    - merge_requests
+    
 test critical automation:
   stage: test - critical automations
   variables:
