@@ -21,8 +21,8 @@ test critical automation:
     ANSIBLE_HOST: $ANSIBLE_HOST
   script:
     - python /tester.py 'tester/critical_automations.yml'
-  # only:
-  #   - merge_requests
+  only:
+    - merge_requests
 
 .deploy: &deploy
   stage: deploy
