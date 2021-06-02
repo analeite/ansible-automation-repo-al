@@ -27,14 +27,14 @@ test critical automation:
   script:
     - 'curl -X GET -H "Authorization: Bearer ${ANSIBLE_TOKEN}" ${ANSIBLE_HOST}/api/v2/projects/${PROJECT_ID}/update/ -k |grep "{\"can_update\":true}"'
 
-Deploy Master:
+Deploy Testing:
   <<: *deploy
   variables:
     ANSIBLE_TOKEN: $ANSIBLE_TOKEN
     ANSIBLE_HOST: $ANSIBLE_HOST
     PROJECT_ID: 87
   only:
-    - master
+    - testing
 
 Deploy Pre-Production:
   <<: *deploy

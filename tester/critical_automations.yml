@@ -1,0 +1,8 @@
+---
+- id: 111
+  name: Azure VM Power off and Power On
+  timeout: 40
+
+- id: 95
+  name: Apache Installation
+  timeout: 90
