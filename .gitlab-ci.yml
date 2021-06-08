@@ -1,6 +1,6 @@
 ---
 image:
-  name: ansible-lint:mars-custom
+  name: ansible-lint:jupiter-custom
   entrypoint: [""]
 
 stages:
